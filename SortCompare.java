@@ -162,14 +162,12 @@ public class  SortCompare {
    public static void radixSort(int[] array) {
       int[] unsorted = array.clone();
       int max = getMax(array);
-      int maxDigits;
-      //gets how many digits bigest number has
-      for (maxDigits = 0; max > 0; maxDigits++) {
-		   max = (int) (max/10);
-		}
-      //runs counting sort on digits   
-      for (int digit = 1; digit <= maxDigits; digit++)
-         countingSort(array, (int) Math.pow(digit,10));
+      //runs counting sort on digits for each digit/decimal place  
+      for (int digit = 1; max/digit > 0; digit *= 10)  {
+         System.out.println(digit);
+         countingSort(array, digit);
+      }
+            //gets how many digits bigest number has
       printStats("radix", unsorted, 0, array);
     }
     
