@@ -6,9 +6,6 @@ Purpose: Generate a area of n size of numbers between -n and n where n is given 
          the try out merge, insertion, quick, and or radix sort on the aformentioned array.
 */
 
-//NEED TO DO:
-// redo write up due to quick sort bug (solved)
-// Actually put on github
 import java.io.*; 
 import java.util.*;
 import java.lang.*;
@@ -54,8 +51,7 @@ public class  SortCompare {
    }
    
    /* Takes in an unsorted array. first int of that array, last int of that array
-      and number of current comparisons that have been made and breaks the array in halfs
-      to sort. */
+      and number of current comparisons that have been made . */
    public static void MergeHelper(int[] unsortedArray, int first, int last, int[] comp) {
       if (first < last) {
          int mid = (first+last)/2;
@@ -80,6 +76,7 @@ public class  SortCompare {
       for (int i = 0; i < rightSize; i++) {
          rightArray[i] = unsortedArray[mid+1+i];
       }
+      //uses ints max value in place of infinity
       leftArray[leftSize] = Integer.MAX_VALUE; 
       rightArray[rightSize] = Integer.MAX_VALUE;
       int i = 0;
@@ -164,7 +161,6 @@ public class  SortCompare {
       and then runs counting sort from LSD to MSD */
    public static void radixSort(int[] array) {
       int[] unsorted = array.clone();
-      int comp = 0;
       int max = getMax(array);
       int maxDigits;
       //gets how many digits bigest number has
@@ -174,7 +170,7 @@ public class  SortCompare {
       //runs counting sort on digits   
       for (int digit = 1; digit <= maxDigits; digit++)
          countingSort(array, (int) Math.pow(digit,10));
-      printStats("radix", unsorted, comp, array);
+      printStats("radix", unsorted, 0, array);
     }
     
     //takes in unsorted array and current digit and then sorts
