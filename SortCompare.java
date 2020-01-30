@@ -1,7 +1,7 @@
 /*
 Author: Colton hagan
-Class: CS 241
-Date: 1/26/20
+Class: CSCI 241
+Date: 1/29/20
 Purpose: Generate a area of n size of numbers between -n and n where n is given by user input
          the try out merge, insertion, quick, and or radix sort on the aformentioned array.
 */
@@ -58,8 +58,8 @@ public class  SortCompare {
          //finds middle to sort halves
          int mid = (first + last) / 2;
          MergeHelper(unsortedArray, first, mid, comparisons);
-         MergeHelper(unsortedArray,mid+1,last, comparisons);
-         Merge(unsortedArray,first,mid,last, comparisons);
+         MergeHelper(unsortedArray, mid + 1, last, comparisons);
+         Merge(unsortedArray,first, mid, last, comparisons);
       }
    }
    
@@ -124,7 +124,7 @@ public class  SortCompare {
         int pivot = unsortedArray[last];
         int temp;
         int i = (first - 1);
-        for (int j=first; j<last; j++) {
+        for (int j = first; j < last; j++) {
             //if current spot is smaller then pivot swap
             if (unsortedArray[j] < pivot) { 
                 comparisons[0]++;
@@ -151,7 +151,7 @@ public class  SortCompare {
          //swaps elements n with prevous element until all elements before n are sorted
          while ((j > 0) && (array[j - 1] > array[j])) {
             int temp = array[j - 1];
-            array[j-1] = array[j];
+            array[j - 1] = array[j];
             array[j] = temp;
             j--;
             comparisons++;
@@ -169,7 +169,6 @@ public class  SortCompare {
       for (int digit = 1; max / digit > 0; digit = digit * 10)  {
          countingSort(array, digit);
       }
-            //gets how many digits bigest number has
       printStats("radix", unsorted, 0, array);
     }
     
@@ -181,6 +180,7 @@ public class  SortCompare {
       
       //count number of occurances of number
       for (int i = 0; i < length; i++) {
+         //Uses +10 to avoid negetives
          count[((unsortedArray[i] / digit) % 10) + 10]++;
       }
       for (int i = 1; i < count.length; i++) {
@@ -189,17 +189,18 @@ public class  SortCompare {
       //create sorted array
       int[] sortedArray = new int[length];
       for (int i = length - 1; i >= 0; i--) {
-         sortedArray[count[(unsortedArray[i]/digit) % 10 + 10] - 1] = unsortedArray[i];
+         sortedArray[count[(unsortedArray[i] / digit) % 10 + 10] - 1] = unsortedArray[i];
          count[((unsortedArray[i] / digit) % 10) + 10]--;
       }
       
-      //Save into original array (.clone() did not work here for some reason)
+      //Save into original array
       System.arraycopy(sortedArray, 0, unsortedArray, 0, sortedArray.length);
    }
    
    //Prints out array and returns it in string form 
    //Note: I used this over Array.toString due to my prefence in appearance
    public static String arrayPrint(int[] array) {
+      //fenceposting
       String output = "" + array[0];
       for(int i = 1; i < array.length; i++) {
          output += " " + array[i];
