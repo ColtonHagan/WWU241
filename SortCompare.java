@@ -19,7 +19,7 @@ public class  SortCompare {
       int size = user_input.nextInt();
       int[] unsorted = new int[size];
       for (int i = 0; i < size; i++) {
-         unsorted[i] = (int)(Math.random() * ((size * 2) + 1)) + - size;
+         unsorted[i] = (int)(Math.random() *((size * 2) + 1)) + -size;
       }
       //Takes user input of type of sort and then runs that sort
       System.out.print("Which sort [m,i,q,r,all]? ");
@@ -34,6 +34,7 @@ public class  SortCompare {
       } else if (sort_type.equals("r")) {
          radixSort(unsorted);
       } else {
+         //copies arrays to avoid overlap
          mergeSort(unsorted.clone());
          quickSort(unsorted.clone());
          insertionSort(unsorted.clone());
@@ -45,15 +46,17 @@ public class  SortCompare {
    public static void mergeSort(int[] array) {
       int[] comparisons = new int[1];
       int[] unsorted = array.clone();
-      MergeHelper(array, 0, array.length-1, comparisons);
+      MergeHelper(array, 0, array.length - 1, comparisons);
       printStats("merge", unsorted, comparisons[0], array);
    }
    
    /* Takes in an unsorted array. first int of that array, last int of that array
-      and number of current comparisons that have been made . */
+      and number of current comparisons that have been. 
+      Calculates mid and splits array in halves*/
    public static void MergeHelper(int[] unsortedArray, int first, int last, int[] comparisons) {
       if (first < last) {
-         int mid = (first+last)/2;
+         //finds middle to sort halves
+         int mid = (first + last) / 2;
          MergeHelper(unsortedArray, first, mid, comparisons);
          MergeHelper(unsortedArray,mid+1,last, comparisons);
          Merge(unsortedArray,first,mid,last, comparisons);
@@ -63,17 +66,18 @@ public class  SortCompare {
    /* Takes in an unsorted array. first int of that array, last int of that array
       and number of current comparisons that have been made and then creates temporary arrays
       for each half of original array and then sorts the arrays */
-   public static void Merge(int [] unsortedArray, int first, int mid, int last, int[] comparisons) {
+   public static void Merge(int [] unsortedArray, int first, int mid,
+                            int last, int[] comparisons) {
       //creates a temporary left and right array with last element being int's max value
       int leftSize = mid - first + 1;
       int rightSize = last - mid;
       int leftArray[] = new int [leftSize + 1]; 
       int rightArray[] = new int [rightSize + 1]; 
       for (int i = 0; i < leftSize; i++) {
-         leftArray[i] = unsortedArray[first+i];
+         leftArray[i] = unsortedArray[first + i];
       }
       for (int i = 0; i < rightSize; i++) {
-         rightArray[i] = unsortedArray[mid+1+i];
+         rightArray[i] = unsortedArray[mid + 1 + i];
       }
       //uses ints max value in place of infinity into last spot of arrays
       leftArray[leftSize] = Integer.MAX_VALUE; 
@@ -107,7 +111,7 @@ public class  SortCompare {
       in parts to sort. */
    public static void quickHelper(int[] unsortedArray, int first, int last, int[] comparisons) {
       if(first < last) {
-         int index = partition(unsortedArray,first,last, comparisons);
+         int index = partition(unsortedArray, first, last, comparisons);
          quickHelper(unsortedArray,first, index - 1, comparisons);
          quickHelper(unsortedArray, index + 1, last, comparisons);
       }
@@ -119,7 +123,7 @@ public class  SortCompare {
    public static int partition(int[] unsortedArray, int first, int last, int[] comparisons) {
         int pivot = unsortedArray[last];
         int temp;
-        int i = (first-1);
+        int i = (first - 1);
         for (int j=first; j<last; j++) {
             //if current spot is smaller then pivot swap
             if (unsortedArray[j] < pivot) { 
@@ -132,9 +136,9 @@ public class  SortCompare {
         }
         //swap pivot
         temp = unsortedArray[last]; 
-        unsortedArray[last] = unsortedArray[i+1]; 
+        unsortedArray[last] = unsortedArray[i + 1]; 
         unsortedArray[i+1] = temp;
-        return i+1;
+        return i + 1;
    }
    
    // Takes in unsorted array and sorts it using insertion sort
@@ -145,8 +149,8 @@ public class  SortCompare {
       for(int i = 1; i < len; i++) {
          int j = i;;
          //swaps elements n with prevous element until all elements before n are sorted
-         while ((j > 0) && (array[j-1] > array[j])) {
-            int temp = array[j-1];
+         while ((j > 0) && (array[j - 1] > array[j])) {
+            int temp = array[j - 1];
             array[j-1] = array[j];
             array[j] = temp;
             j--;
@@ -162,7 +166,7 @@ public class  SortCompare {
       int[] unsorted = array.clone();
       int max = getMax(array);
       //runs counting sort on digits for each digit/decimal place  
-      for (int digit = 1; max/digit > 0; digit *= 10)  {
+      for (int digit = 1; max / digit > 0; digit = digit * 10)  {
          countingSort(array, digit);
       }
             //gets how many digits bigest number has
@@ -177,7 +181,7 @@ public class  SortCompare {
       
       //count number of occurances of number
       for (int i = 0; i < length; i++) {
-         count[((unsortedArray[i]/digit)%10)+10]++;
+         count[((unsortedArray[i] / digit) % 10) + 10]++;
       }
       for (int i = 1; i < count.length; i++) {
          count[i] += count[i - 1];
@@ -185,8 +189,8 @@ public class  SortCompare {
       //create sorted array
       int[] sortedArray = new int[length];
       for (int i = length - 1; i >= 0; i--) {
-         sortedArray[count[(unsortedArray[i]/digit)%10+10]-1] = unsortedArray[i];
-         count[((unsortedArray[i]/digit)%10)+10]--;
+         sortedArray[count[(unsortedArray[i]/digit) % 10 + 10] - 1] = unsortedArray[i];
+         count[((unsortedArray[i] / digit) % 10) + 10]--;
       }
       
       //Save into original array (.clone() did not work here for some reason)
@@ -215,8 +219,8 @@ public class  SortCompare {
    }
    /* Takes name of sort, unsorted array (pre-sort), sorted array(post-sort),
       and number of comparisons name and prints them out to present to the user */
-   public static void printStats(String name, int[] unsorted, int comparisons, int[] sorted) {
-      System.out.println(name + " sort");
+   public static void printStats(String sortName, int[] unsorted, int comparisons, int[] sorted) {
+      System.out.println(sortName + " sort");
       System.out.println("============");
       //checks to see if length of array is under 20, prints array if true
       if(unsorted.length < 20) {
