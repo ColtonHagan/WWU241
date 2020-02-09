@@ -9,10 +9,8 @@ public class findUsers {
    //vertexes on graph
    private static ArrayList<String> vertexNames;
    public static void main(String args[]) throws IOException {
-      String fileName = args[0];
       String sourcePerson = args[1];
-      String targetPerson = args[2];
-      BufferedReader fileReader = new BufferedReader(new FileReader(fileName));
+      BufferedReader fileReader = new BufferedReader(new FileReader(args[0]));
       String currLine;
       ArrayList<String> words = new ArrayList<String>();
       while ((currLine = fileReader.readLine()) != null) {
@@ -25,7 +23,7 @@ public class findUsers {
       createGraph(words);
       //printGraph();
       int[] dijkstraDistances = Dijkstra(sourcePerson);
-      findCorrectOutput(dijkstraDistances, sourcePerson, targetPerson);
+      findCorrectOutput(dijkstraDistances, sourcePerson, args[2]);
    }
    public static void findCorrectOutput(int[] dijkstraDistances, String sourcePerson, String targetPerson) {
       //Saves into a arrayList to allow fenceposting
