@@ -52,29 +52,24 @@ public class findUsers {
       //Saves into a arrayList to allow fenceposting
       ArrayList<String> output = new ArrayList<String>();
       String targetNumber = targetIdea.replaceAll("[^0-9]", "");
-      /*Uses series of if statements with redundency due to import rule not allowing BiPredicate
-        Saves if target idea is eq#*/
-      if(targetIdea.matches(".*eq\\d.*")) {
-         for(int i = 0; i < numVertices; i++) { 
+      //Uses addition if statement to factor out for loop and reduce run time
+      if(targetIdea.matches("eq[\\d]+") || targetIdea.matches("lt[\\d]+")
+         || targetIdea.matches("gt[\\d]+")) {
+         for(int i = 0; i < numVertices; i++) {
+            //Saves if target idea is eq#
             if(dijkstraDistances[i] == Integer.parseInt(targetNumber) &&
                //makes sure to not add self to the output output
-               i != getVertexID(sourcePerson)) {
+               i != getVertexID(sourcePerson) && targetIdea.matches("eq[\\d]+")) {
                output.add(vertexNames.get(i));
             }
-         }
-      //Saves if target idea is lt#
-      } else if (targetIdea.matches(".*lt\\d.*")) {
-         for(int i = 0; i < numVertices; i++) {
+            //Saves if target idea is lt#
             if(dijkstraDistances[i] < Integer.parseInt(targetNumber) &&
-               i != getVertexID(sourcePerson)) {
+               i != getVertexID(sourcePerson) && targetIdea.matches("lt[\\d]+")) {
                output.add(vertexNames.get(i));
             }
-         }
-      //Saves if target idea is gt#
-      } else if (targetIdea.matches(".*gt\\d.*")) {
-         for(int i = 0; i < numVertices; i++) {
+            //Saves if target idea is gt#
             if(dijkstraDistances[i] > Integer.parseInt(targetNumber) &&
-               i != getVertexID(sourcePerson)) {
+               i != getVertexID(sourcePerson) && targetIdea.matches("gt[\\d]+")) {
                output.add(vertexNames.get(i));
             }
          }
