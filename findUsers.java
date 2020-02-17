@@ -1,5 +1,5 @@
 /*
-Author: Colton hagan
+Author: Colton Hagan
 Class: CS 241
 Date: 2/1/2020
 Purpose: Takes in via command line arguements a file, source person, and target/targets.
@@ -20,7 +20,9 @@ public class findUsers {
    private static ArrayList<String> vertexNames;
    //number of vertices on ints
    private static int numVertices;
+   
    public static void main(String args[]) throws IOException {
+   //uses args to take in command line arguements
       String sourcePerson = args[1];
       ArrayList<String> namesAndWeight = readFile(args[0]);
       createVertex(namesAndWeight);
@@ -168,7 +170,6 @@ public class findUsers {
       }
       //set variable of number of vertices
       numVertices = vertexNames.size();
-
    }
    
    /*Takes in a array list of names and weights and creates a matrix representation of a directed,
@@ -181,6 +182,7 @@ public class findUsers {
          graph[getVertexID(namesAndWeight.get(i))][getVertexID(namesAndWeight.get(i+1))] = weight;
       }
    }
+   
    /*Takes in a vertex name and returns its ID in vertexNames array list,
      returning -1 if there is no such name in the array list*/
    public static int getVertexID(String vertexName) {
