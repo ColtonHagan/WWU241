@@ -9,8 +9,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 public class BST {
    private static Node overallRoot;
-   //Why do I need this constructor -- ask teacher
+   //Sets root to null
    public BST(){  
+      overallRoot = null;
    } 
    //Returns the node that contains the original root
    public static Node getRoot(){
@@ -49,26 +50,27 @@ public class BST {
       System.out.println("Type integers, press enter after each one");
       System.out.println("Type end when done");
       String userInput = reader.readLine();
+      BST bst = new BST();
       //Creates the root if the user does not start with end
       if(!userInput.equals("end")) {
-         overallRoot = new Node(Integer.parseInt(userInput));
+         bst.overallRoot = new Node(Integer.parseInt(userInput));
       }
       //As long as the user is not inputing end it inserts nodes of bst tree
       while(!userInput.equals("end")) {
          userInput = reader.readLine();
          if(!userInput.equals("end")) {
-            insert(Integer.parseInt(userInput));
+            bst.insert(Integer.parseInt(userInput));
          }
       }
       //Prints out in order/pre order/post order transversals
       System.out.print("In order: ");
-      printInOrder(getRoot());
+      printInOrder(bst.getRoot());
       System.out.println();
       System.out.print("Pre order: ");
-      printPreOrder(getRoot());
+      printPreOrder(bst.getRoot());
       System.out.println();
       System.out.print("Post order: ");
-      printPostOrder(getRoot());
+      printPostOrder(bst.getRoot());
       System.out.println();
    }
 }
