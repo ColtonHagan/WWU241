@@ -1,6 +1,6 @@
 /*
   Name: Colton Hagan
-  Date: 2/13/20
+  Date: 2/27/20
   Class: 241
   Description: Node of BST tree
 */
@@ -14,15 +14,14 @@ public class Node{
    public int getValue(){
       return value;
    }
-   
+   //Returns left child node
    public Node getLeftChild(){
       return left;
    }
-   
+   //Returns right child node
    public Node getRightChild() {
       return right;
    }
-   
    //Takes in value in inserts it on bst tree in the correct left/right position
    public void insert(int value){
       //Inserts left/right node
