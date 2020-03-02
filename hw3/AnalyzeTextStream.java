@@ -1,23 +1,29 @@
+/*
+Author: Colton Hagan
+Class: CS 241
+Date: 3/1/2020
+Purpose: Takes in via command line arguements a file, and then reads that file into a bst tree
+         ignoring all non numbers and increasing appearance value of repeated words
+         (but not adding them to the tree), also takes in other arguements, if the other arguement
+         is ANALYZE returns 3 biggest (by frequency of apperances) nodes/words of tree. If other
+         arguement is words returns there frequency of appearances, along with were they appeared
+         in the file 
+*/
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 public class AnalyzeTextStream {
    private static Node overallRoot;
    //How many of the biggest nodes do you want to return when ANALYZE is called
    private static final int biggestSize = 3;
    public static void main(String args[]) throws IOException {
-      //String[] arg = {"Asample.txt", "was", "ran", "the", "cat"};
-      //String[] arg = {"stressTest", "ANALYZE"};
-      String[] arg = {"Asample.txt", "ANALYZE"};
-      
-      readAndCreate(arg[0]);
+      readAndCreate(args[0]);
       //If the arguement passed outside of file name is ANALYZE command
-      if(arg[1] == "ANALYZE") {
+      if(args[1].equals("ANALYZE")) {
          Node[] biggest = new Node[biggestSize];
          for(int i = 0; i < biggestSize; i++) {
-            //Fills with filler values with a appearance of 1
+            //Fills all with filler values with a appearance of 0
             biggest[i] = new Node("filler", 0);
          }
          findBiggestNodes(overallRoot, biggest);
@@ -27,12 +33,12 @@ public class AnalyzeTextStream {
          }
       //If it is words, not ANALYZE
       } else {
-         for(int i = 1; i < arg.length; i++) {
-            Node node = inTree(arg[i], overallRoot);
+         for(int i = 1; i < args.length; i++) {
+            Node node = inTree(args[i], overallRoot);
             if (node != null) {
                printNodeInfo(node);
             } else {
-               System.out.print(arg[i]+":0");
+               System.out.print(args[i]+":0");
             }
             //Is redudent with ANALYZE case, but needed to deal with null possibility
             System.out.print(" ");
@@ -57,12 +63,7 @@ public class AnalyzeTextStream {
            biggest array while ignoring latter indexes*/ 
          int smallestIndex = findSmallestValuesIndex(biggest);
          //Checks nodes size against all nodes in biggest
-         if((node.getAppearances().size() > biggest[smallestIndex].getAppearances().size())
-            //Is this redundant? It should be, without repetive values in tree
-            //&& !inArray(biggest, node)
-            ) {
-            //System.out.println(node.getValue() + "->" +Arrays.toString(node.getAppearances().toArray()));
-            //issue if it is scalling values it is not reaching final value to change it --> find smallest value in array?
+         if((node.getAppearances().size() > biggest[smallestIndex].getAppearances().size())) {
             biggest[smallestIndex] = node;
          }
          findBiggestNodes(node.right, biggest);
@@ -81,18 +82,6 @@ public class AnalyzeTextStream {
       }
       return smallestIndex;
    }
-   /*
-   //keeping for safety purpose, dont need anymore
-   //Takes in a array of nodes, and a node. Checks and returns if node is in array
-   public static boolean inArray(Node[] nodeArray, Node node) {
-      for(Node arrayNode : nodeArray) {
-         if(arrayNode == node) {
-            return true;
-         }   
-      }
-      return false;
-   }
-   */
    /*Takes in a fileName and reads the file attached to it, constructing a bst of it word by word
      ignoring non-letters, with words that are node values of the bst tree being non-repetitive*/
    public static void readAndCreate(String fileName) throws IOException {
@@ -138,6 +127,7 @@ public class AnalyzeTextStream {
             return inTree(value, node.right);
          }
       }
+      //returns null if no matach is found
       return null;
    }
 }
