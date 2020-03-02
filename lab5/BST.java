@@ -126,7 +126,6 @@ public class BST {
    //Rotates BST right around pivot point 
    public static Node rightRotate(Node pivot) {
       Node aNode = pivot.getLeftChild(); 
-      Node leftChild = aNode.getLeftChild(); 
       Node rightChild = aNode.getRightChild(); 
       
       aNode.right = pivot;
