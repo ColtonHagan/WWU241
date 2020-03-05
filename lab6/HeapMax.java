@@ -5,7 +5,7 @@
   Description: Integer Heap with limited size and no delate
 */
 public class HeapMax {
-   public int[] Heap;
+   private int[] Heap;
    private int size;
    private int maxSize;
    //Constructor -- Takes in maxSize and sets it
