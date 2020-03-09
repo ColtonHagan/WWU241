@@ -29,7 +29,6 @@ public class HeapMax {
    //returns boolean if given position is pointing to a leaf
    private boolean isLeaf(int pos) { 
       if(pos * 2 > size) {
-         System.out.println(pos * 2);
          return true;
       } 
       return false;
