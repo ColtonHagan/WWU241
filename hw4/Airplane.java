@@ -18,6 +18,10 @@ public class Airplane {
    public Airplane(String flightNum, String time, int numPassengers) {
       this.flightNum = flightNum;
       this.time = time;
+      //Adds a 0 to add 1-9 for calculations
+      if(time.length() == 4) {
+         this.time = "0" + time;
+      }
       this.numPassengers = numPassengers;
       //Calculates time in minutes
       timeInMinutes();
@@ -31,41 +35,25 @@ public class Airplane {
          timeInMinutes = Integer.MAX_VALUE;
       //Coverts time from hh:mm to just minutes
       } else {
-         String fixedTime = hourFixer();
          //fixes 12pm < 1pm problem
-         if(!fixedTime.substring(0,2).equals("12")) {
+         if(!time.substring(0,2).equals("12")) {
             timeInMinutes += 720;
          }
-         int inMinutes = Integer.parseInt(fixedTime.substring(0,2)) * 60 
-                         + Integer.parseInt(fixedTime.substring(3,5));
-         timeInMinutes += inMinutes;
+         timeInMinutes += Integer.parseInt(time.substring(0,2)) * 60 
+                         + Integer.parseInt(time.substring(3,5));
       }
-   }
-   
-   /*"fixes" time by adding a 0 in front if hour is 1 through 9 to allow localTime 
-     and timeInMinutes to correctly parses*/
-   private String hourFixer() {
-      String fixedTime = time;
-      if(time.length() == 4) {
-         fixedTime = "0" + fixedTime;
-      }
-      return fixedTime;
    }
    //Adds given time(in minutes) to requested takeoff time
    public void addTime(int minutes) {
       DateTimeFormatter timeFormator = DateTimeFormatter.ofPattern("hh:mm");
-      LocalTime updatedTime = LocalTime.parse(hourFixer());
+      LocalTime updatedTime = LocalTime.parse(time);
+      //Deals with swapping from pm to am
       String oldTime = time;
       String newTime = timeFormator.format(updatedTime.plusMinutes(minutes));
-      //Deals with swapping from pm to am
       if(oldTime.substring(0,2).equals("11") && !newTime.substring(0,2).equals("11")) {
          timeInMinutes += 720;
       }
       time = newTime;
-      //Removes hourfixer fix
-      if(time.substring(0,1).equals("0")) {
-          time = time.substring(1,5);
-      }
    }
    //Prints out flight in diffrent ways, depending on a given way to do so
    public void printFlight(int method) {
@@ -73,6 +61,10 @@ public class Airplane {
       if(method == 2) {
          System.out.print(" " + numPassengers);
       } else if(method == 3) {
+         //Removes the extra 0 I used for calculations
+         if(time.substring(0,1).equals("0")) {
+            time = time.substring(1,5);
+         }
          System.out.print(" departed at " + time);
       }
       System.out.println();
