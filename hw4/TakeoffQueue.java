@@ -37,7 +37,9 @@ public class TakeoffQueue {
       int lastTimeInMin = 0;
       //Runs while heap has values in it
       while (heap.size() > 1) {
-         //if there are no times that have been requested, finds next requested time
+         /*if there are no times that have been requested, finds next requested time
+           this works on the assumption that requested times are not in order
+           double check with teacher*/
          if(method == 3 && !heap.get(1).getRequested()) {
             /*Temperally cahnges the method to 4 to sort by time to 
             get the smallest time value to start on */

@@ -22,11 +22,11 @@ public class Airplane {
       if(time.length() == 4) {
          this.time = "0" + time;
       }
-      this.numPassengers = numPassengers;
       //Calculates time in minutes
       timeInMinutes();
       //At first no takeoff times have passed/ are up next
       requested = false;
+      this.numPassengers = numPassengers;
    }
    //Converts and returns time in file to minutes
    private void timeInMinutes() {
