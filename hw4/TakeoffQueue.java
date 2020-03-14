@@ -19,12 +19,13 @@ public class TakeoffQueue {
    //Method used to sort
    private static int method;
    public static void main(String[] args) throws IOException { 
-      method = Integer.parseInt(args[1]);
+      String[] arg = {"flightsA.txt", "3"};
+      method = Integer.parseInt(arg[1]);
       heap = new ArrayList<Airplane>();
       //Filler value of index 0
       Airplane filler = new Airplane("filler", "filler", -1);
       heap.add(filler);
-      readFile(args[0]);
+      readFile(arg[0]);
       findAndPrintOrder();
   
    }
@@ -43,15 +44,12 @@ public class TakeoffQueue {
          if(method == 3 && !heap.get(1).getRequested()) {
             /*Temperally cahnges the method to 4 to sort by time to 
             get the smallest time value to start on */
-            method = 4;
+            method = 1;
             buildHeap();
             //Resets to finding method by number of passengers
             method = 3;
          } 
-         //Builds heap unless method=1, then keeps original order
-         if(method != 1) {
-            buildHeap();
-         }
+         buildHeap();
          //If it is the third method calculates the time for it
          if (method == 3) {
             int timeToTakeoff = (int)Math.ceil(((double)heap.get(1).getNumPassengers()/2)/60);
@@ -60,7 +58,6 @@ public class TakeoffQueue {
                heap.get(1).changeTime(lastTime);
             }
             heap.get(1).addTime(timeToTakeoff);
-            
             //Notes all requested take off times that occur while current plane is taking off
             for(int i = 1; i < heap.size(); i++) {
                if(heap.get(i).getTimeInMinutes() <= heap.get(1).getTimeInMinutes() &&
@@ -69,15 +66,12 @@ public class TakeoffQueue {
                }
             }
          }
-         heap.get(1).printFlight(method);
+         //Saves prevous root to help calculate time
          lastTime = heap.get(1).getTime();
          lastTimeInMin = heap.get(1).getTimeInMinutes();
-         //If it is the first method keeps order, else removes root and reorders
-         if (method == 1) {
-            heap.remove(1);
-         } else {
-            removeRoot();
-         }
+         //Prints and removes root
+         heap.get(1).printFlight(method);
+         removeRoot();
       }
    }
    //Takes in a fileName and reads that file into a heap
@@ -135,7 +129,7 @@ public class TakeoffQueue {
                maxValue = beenRequested(index,maxValue);
          }
       //If it is method 4 sorts by time
-      } else if(method == 4) {
+      } else if(method == 1) {
          //Uses negetive values to make max heaping into min heaping
          leftChildValue = -heap.get(leftChild).getTimeInMinutes();
          rightChildValue = -heap.get(rightChild).getTimeInMinutes();

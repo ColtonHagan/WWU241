@@ -54,6 +54,7 @@ public class Airplane {
          timeInMinutes += 720;
       }
       time = newTime;
+      timeInMinutes();
    }
    //Prints out flight in diffrent ways, depending on a given way to do so
    public void printFlight(int method) {
@@ -75,7 +76,7 @@ public class Airplane {
    }
    //Changes if it has passed requested takeoff time
    public void changeRequestToTrue() {
-      this.requested = true;
+      requested = true;
    }
    //Returns flightNum of plane
    public String getFlightNum() {
