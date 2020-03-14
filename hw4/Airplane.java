@@ -35,26 +35,27 @@ public class Airplane {
          timeInMinutes = Integer.MAX_VALUE;
       //Coverts time from hh:mm to just minutes
       } else {
+         timeInMinutes = Integer.parseInt(time.substring(0,2)) * 60 
+                         + Integer.parseInt(time.substring(3,5));
          //fixes 12pm < 1pm problem
          if(!time.substring(0,2).equals("12")) {
             timeInMinutes += 720;
          }
-         timeInMinutes += Integer.parseInt(time.substring(0,2)) * 60 
-                         + Integer.parseInt(time.substring(3,5));
       }
    }
    //Adds given time(in minutes) to requested takeoff time
    public void addTime(int minutes) {
       DateTimeFormatter timeFormator = DateTimeFormatter.ofPattern("hh:mm");
       LocalTime updatedTime = LocalTime.parse(time);
-      //Deals with swapping from pm to am
+      //Checks with swapping from pm to am
       String oldTime = time;
       String newTime = timeFormator.format(updatedTime.plusMinutes(minutes));
-      if(oldTime.substring(0,2).equals("11") && !newTime.substring(0,2).equals("11")) {
-         timeInMinutes += 720;
-      }
       time = newTime;
       timeInMinutes();
+      //Swaps am to pm
+      if(oldTime.substring(0,2).equals("11") && !newTime.substring(0,2).equals("11")) {
+         timeInMinutes += 720;
+      } 
    }
    //Prints out flight in diffrent ways, depending on a given way to do so
    public void printFlight(int method) {
