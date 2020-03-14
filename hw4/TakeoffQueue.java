@@ -38,9 +38,7 @@ public class TakeoffQueue {
       int lastTimeInMin = 0;
       //Runs while heap has values in it
       while (heap.size() > 1) {
-         /*if there are no times that have been requested, finds next requested time
-           this works on the assumption that requested times are not in order
-           double check with teacher*/
+         //if there are no times that have been requested, finds next requested time
          if(method == 3 && !heap.get(1).getRequested()) {
             /*Temperally cahnges the method to 4 to sort by time to 
             get the smallest time value to start on */
@@ -63,6 +61,11 @@ public class TakeoffQueue {
                if(heap.get(i).getTimeInMinutes() <= heap.get(1).getTimeInMinutes() &&
                   !heap.get(i).getRequested()) {
                   heap.get(i).changeRequestToTrue();
+               }
+               /*Checks if time has passed mindnight/gone from pm to am, if so notes for rest
+                 of airplanes after will have also done so*/
+               if(heap.get(1).getHitMidnight()) {
+                  heap.get(i).passedMidnight();
                }
             }
          }

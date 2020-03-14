@@ -14,8 +14,7 @@ public class Airplane {
    private int numPassengers;
    //If time has passed requested takeoff tiem
    private boolean requested;
-   //Notes if time has gone from pm to am --Ran out of time to make more elegent
-   private boolean PmToAm;
+   private boolean hitMidnight;
    //Insializes values
    public Airplane(String flightNum, String time, int numPassengers) {
       this.flightNum = flightNum;
@@ -43,8 +42,8 @@ public class Airplane {
          if(!time.substring(0,2).equals("12")) {
             timeInMinutes += 720;
          }
-         //Adds time if it has passed midnight
-         if(PmToAm) {
+         //adds time if it has hit midnight
+         if(hitMidnight) {
             timeInMinutes += 720;
          }
       }
@@ -56,10 +55,10 @@ public class Airplane {
       //Checks with swapping from pm to am
       String oldTime = time;
       time = timeFormator.format(updatedTime.plusMinutes(minutes));
+      //Swaps pm to pm
       if(oldTime.substring(0,2).equals("11") && !time.substring(0,2).equals("11")) {
-         PmToAm = true;
+         hitMidnight = true;
       } 
-      //updates time in minutes
       timeInMinutes();
    }
    //Prints out flight in diffrent ways, depending on a given way to do so
@@ -99,8 +98,15 @@ public class Airplane {
    //Changes time to a given string
    public void changeTime(String newTime) {
       time = newTime;
-      //updates time in minutes
       timeInMinutes();
+   }
+   //If called changes the time from pm to am
+   public void passedMidnight() {
+      hitMidnight = true;
+   }
+   //Returns if the time has passed midnight (gone from pm to am)
+   public boolean getHitMidnight() {
+      return hitMidnight;
    }
    //Returns number of passengers on flight
    public int getNumPassengers() {
