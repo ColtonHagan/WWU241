@@ -19,13 +19,12 @@ public class TakeoffQueue {
    //Method used to sort
    private static int method;
    public static void main(String[] args) throws IOException { 
-      String[] arg = {"flightsA.txt", "3"};
-      method = Integer.parseInt(arg[1]);
+      method = Integer.parseInt(args[1]);
       heap = new ArrayList<Airplane>();
       //Filler value of index 0
       Airplane filler = new Airplane("filler", "filler", -1);
       heap.add(filler);
-      readFile(arg[0]);
+      readFile(args[0]);
       findAndPrintOrder();
   
    }
