@@ -49,11 +49,10 @@ public class Airplane {
       LocalTime updatedTime = LocalTime.parse(time);
       //Checks with swapping from pm to am
       String oldTime = time;
-      String newTime = timeFormator.format(updatedTime.plusMinutes(minutes));
-      time = newTime;
+      time = timeFormator.format(updatedTime.plusMinutes(minutes));
       timeInMinutes();
-      //Swaps am to pm
-      if(oldTime.substring(0,2).equals("11") && !newTime.substring(0,2).equals("11")) {
+      //Swaps pm to pm
+      if(oldTime.substring(0,2).equals("11") && !time.substring(0,2).equals("11")) {
          timeInMinutes += 720;
       } 
    }
