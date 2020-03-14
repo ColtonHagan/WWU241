@@ -63,8 +63,8 @@ public class TakeoffQueue {
                }
                /*Checks if time has passed mindnight/gone from pm to am, if so notes for rest
                  of airplanes after will have also done so*/
-               if(heap.get(1).getHitMidnight()) {
-                  heap.get(i).passedMidnight();
+               if(heap.get(1).getHitMidnight() != 0) {
+                  heap.get(i).passedMidnight(heap.get(1).getHitMidnight());
                }
             }
          }

@@ -14,7 +14,8 @@ public class Airplane {
    private int numPassengers;
    //If time has passed requested takeoff tiem
    private boolean requested;
-   private boolean hitMidnight;
+   //How many times has a time hit midnight (for series of large number of passengers)
+   private int hitMidnight;
    //Insializes values
    public Airplane(String flightNum, String time, int numPassengers) {
       this.flightNum = flightNum;
@@ -43,9 +44,7 @@ public class Airplane {
             timeInMinutes += 720;
          }
          //adds time if it has hit midnight
-         if(hitMidnight) {
-            timeInMinutes += 720;
-         }
+         timeInMinutes += 720*hitMidnight;
       }
    }
    //Adds given time(in minutes) to requested takeoff time
@@ -57,7 +56,7 @@ public class Airplane {
       time = timeFormator.format(updatedTime.plusMinutes(minutes));
       //Swaps pm to pm
       if(oldTime.substring(0,2).equals("11") && !time.substring(0,2).equals("11")) {
-         hitMidnight = true;
+         hitMidnight += 1;
       } 
       timeInMinutes();
    }
@@ -101,11 +100,11 @@ public class Airplane {
       timeInMinutes();
    }
    //If called changes the time from pm to am
-   public void passedMidnight() {
-      hitMidnight = true;
+   public void passedMidnight(int daysPassed) {
+      hitMidnight = daysPassed;
    }
    //Returns if the time has passed midnight (gone from pm to am)
-   public boolean getHitMidnight() {
+   public int getHitMidnight() {
       return hitMidnight;
    }
    //Returns number of passengers on flight
